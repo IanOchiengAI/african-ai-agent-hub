@@ -1,0 +1,11 @@
+# Obsidian internal config
+.obsidian/
+.smart-env/
+.trash/
+
+# Archives
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
