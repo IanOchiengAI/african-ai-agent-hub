@@ -1,4 +1,4 @@
-# Project 2: Agricultural Extension Agent
+# Project 2: Crop Doctor (Swahili-First Agronomy Agent)
 
 **Timeline**: Weeks 19-21 (Phase 4)  
 **Complexity**: High  
@@ -406,7 +406,7 @@ Kuweni salama!"
 
 **Related Projects**:
 - [[Project-1-Kenyan-Hiring-Agent]]
-- [[Project-3-MPesa-Workflow-Agent]]
+- [[Project-3-MPesa-SME-Accounting-Agent]]
 
 **Prerequisites**:
 - Complete [[Phase-3-Production]] (reliability is critical)

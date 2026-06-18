@@ -22,8 +22,8 @@
 │   └── Phase-4-Portfolio.md (Weeks 17-24)
 └── Projects/
     ├── Project-1-Kenyan-Hiring-Agent.md
-    ├── Project-2-Agricultural-Extension-Agent.md
-    └── Project-3-MPesa-Workflow-Agent.md
+    ├── Project-2-Crop-Doctor.md
+    └── Project-3-MPesa-SME-Accounting-Agent.md
 ```
 
 ---
@@ -34,9 +34,9 @@ These are your end deliverables - production agents that solve real African prob
 
 1. **[[Project-1-Kenyan-Hiring-Agent]]** - CV screening agent that understands Kenyan job market context (CBC vs 8-4-4, informal experience, etc.)
 
-2. **[[Project-2-Agricultural-Extension-Agent]]** - WhatsApp-based agent that provides farming advice in Swahili/English for smallholder farmers
+2. **[[Project-2-Crop-Doctor]]** - Swahili-First Agronomy Agent that diagnoses crop diseases from photos and gives actionable weather/farming advice via WhatsApp to smallholder farmers.
 
-3. **[[Project-3-MPesa-Workflow-Agent]]** - Business automation agent that handles M-Pesa reconciliation, invoicing, and payment tracking
+3. **[[Project-3-MPesa-SME-Accounting-Agent]]** - Automates M-Pesa reconciliation by catching payments, matching them to pending invoices, and updating the CRM/Ledger for Kenyan SMEs.
 
 ---
 

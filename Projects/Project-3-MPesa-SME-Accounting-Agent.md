@@ -1,4 +1,4 @@
-# Project 3: M-Pesa Workflow Agent
+# Project 3: M-Pesa SME Accounting Agent
 
 **Timeline**: Weeks 22-24 (Phase 4)  
 **Complexity**: Medium  
@@ -484,7 +484,7 @@ Withholding Tax: KES 5,000
 
 **Related Projects**:
 - [[Project-1-Kenyan-Hiring-Agent]]
-- [[Project-2-Agricultural-Extension-Agent]]
+- [[Project-2-Crop-Doctor]]
 
 **Prerequisites**:
 - Complete [[Phase-3-Production]] (reliability is critical for money)

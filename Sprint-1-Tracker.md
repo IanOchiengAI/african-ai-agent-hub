@@ -62,8 +62,8 @@
 ## 🌍 The Three Portfolio Projects
 
 1. **Kenyan Hiring Agent** — CV screening with Kenyan job market context
-2. **Agricultural Extension Agent** — WhatsApp farming advice in Swahili/English
-3. **M-Pesa Workflow Agent** — Business automation for M-Pesa reconciliation
+2. **Crop Doctor** — Swahili-First Agronomy Agent for diagnosing crop diseases via WhatsApp
+3. **M-Pesa SME Accounting Agent** — Automates M-Pesa payment reconciliation and invoicing
 
 ---
 
