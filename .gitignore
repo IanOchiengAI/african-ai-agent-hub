@@ -9,3 +9,8 @@
 # OS files
 .DS_Store
 Thumbs.db
+
+# Personal Tracker Files
+02-Accounts-Setup.md
+Daily-Progress-Log.md
+00-PROJECT-MASTER-OLD-LESSONS.md
