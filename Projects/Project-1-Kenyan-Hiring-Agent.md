@@ -1,8 +1,9 @@
 # Project 1: Kenyan Hiring Agent
 
-**Timeline**: Weeks 17-18 (Phase 4)  
-**Complexity**: Medium  
-**Target Users**: Kenyan HR departments, recruitment agencies
+**Sprint:** 1 (Weeks 1–8) — **Current Build**  
+**Complexity:** Medium  
+**Target Users:** Kenyan HR departments, recruitment agencies, SMEs  
+**Target Completion:** September 21, 2026
 
 ---
 
@@ -10,21 +11,34 @@
 
 Kenyan employers struggle with CV screening because:
 - CVs mix education systems (8-4-4 vs CBC vs international)
-- Informal work experience not standardized
-- Skills listed inconsistently
+- Informal work experience is not standardized
+- Skills are listed inconsistently
 - Manual screening is slow and biased
-- No local CV screening tools exist
+- No locally-aware CV screening tools exist
 
 ---
 
 ## Solution: AI-Powered CV Screening Agent
 
 An agent that:
-1. Understands Kenyan education context
-2. Extracts structured data from messy CVs
-3. Scores candidates against job requirements
-4. Generates contextual interview questions
-5. Produces shortlist recommendations
+1. Understands Kenyan education context (8-4-4, CBC, international, polytechnics)
+2. Extracts structured data from messy, inconsistently formatted CVs
+3. Scores candidates against job requirements (0–100)
+4. Generates contextual interview questions based on CV gaps
+5. Produces ranked shortlist recommendations
+
+---
+
+## Sprint 1 Build Checklist
+
+- [ ] Week 1: First Anthropic API call working locally
+- [ ] Week 2: CV extraction prompt — extracts name, education system, experience, skills from plain text
+- [ ] Week 3: Tool calling — `extract_education()`, `extract_experience()`, `extract_skills()`
+- [ ] Week 4: Matching engine — `calculate_fit_score()` against a job description
+- [ ] Week 5: Batch processing — handle 10 CVs in one run
+- [ ] Week 6: File support — accept PDF and DOCX inputs
+- [ ] Week 7: Interview question generator — `generate_questions()` based on CV gaps
+- [ ] Week 8: v0.1 demo — end-to-end run, push to GitHub, write build log
 
 ---
 
@@ -33,19 +47,19 @@ An agent that:
 ### Core Components
 
 **1. Document Processor**
-- Input: PDF/DOCX/TXT CVs
-- Extract text (pypdf2, python-docx, mammoth)
+- Input: PDF / DOCX / TXT CVs
+- Extract text using `pypdf2`, `python-docx`, `mammoth`
 - Clean formatting, handle Swahili/English mix
-- Output: Clean text
+- Output: Clean plain text
 
 **2. Data Extraction Agent**
 ```python
 Tools:
-- extract_personal_info()
-- extract_education() # Understands 8-4-4, CBC, international
-- extract_experience() # Handles informal work, gaps
-- extract_skills()
-- extract_certifications()
+- extract_personal_info()     # Name, email, phone, location
+- extract_education()         # Understands 8-4-4, CBC, international
+- extract_experience()        # Handles informal work, gaps, side hustles
+- extract_skills()            # Tech and soft skills
+- extract_certifications()    # Formal and informal certs
 ```
 
 **3. Matching Engine**
@@ -54,20 +68,21 @@ Tools:
 - compare_skills(cv_skills, job_requirements)
 - score_experience(cv_experience, job_level)
 - evaluate_education(cv_education, job_education_req)
-- calculate_fit_score() # Returns 0-100
+- calculate_fit_score()       # Returns 0–100
 ```
 
 **4. Interview Question Generator**
 ```python
 Tool:
 - generate_questions(cv_data, job_role)
-# Returns 5-7 role-specific questions based on CV gaps
+  # Returns 5–7 role-specific questions based on CV gaps
 ```
 
 **5. Output Generator**
 - Structured JSON report
-- PDF shortlist summary
-- SMS notification to candidates (Africa's Talking)
+- Human-readable text summary
+- (Later) PDF shortlist summary
+- (Later) SMS notification to candidates via Africa's Talking
 
 ---
 
@@ -75,39 +90,32 @@ Tool:
 
 ### Kenyan Context Understanding
 
-**Education Systems**:
-- 8-4-4: KCPE → KCSE → University/College
-- CBC: Junior School → Senior School → KPSEA
-- International: IGCSE, IB, A-Levels
-- Informal: Polytechnics, bootcamps, apprenticeships
+**Education Systems:**
+| System | Levels | Notes |
+|--------|--------|-------|
+| 8-4-4 | KCPE → KCSE → University | Still most common on CVs |
+| CBC | Junior → Senior → KPSEA | Newer system, less common on CVs yet |
+| International | IGCSE, IB, A-Levels | Private school candidates |
+| Informal | Polytechnics, bootcamps, apprenticeships | Often undervalued — agent corrects for this |
 
-**Experience Patterns**:
-- Recognize "informal sector" experience
-- Value "hustles" and side projects
-- Understand employment gaps (common in Kenya)
-- Count internships and volunteer work
+**Experience Patterns the Agent Understands:**
+- "Informal sector" experience (jua kali, market traders)
+- "Hustles" and side projects as real work experience
+- Employment gaps (common — school fees, family obligations)
+- Internships and volunteer work counted appropriately
+- "Freelance" and contract roles listed without end dates
 
-**Skills Recognition**:
-- Local tech stack (PHP, WordPress still dominant)
+**Skills Recognition:**
+- Local tech stack (PHP, WordPress still dominant in SMEs)
 - Mobile money integration (M-Pesa, Airtel Money)
-- Multi-language requirements (English/Swahili)
+- Multi-language requirements (English + Swahili)
+- ERP systems common in Nairobi corporates (SAP, Sage)
 
 ### Intelligence Features
 
-1. **Contextual Scoring**:
-   - Not just keyword matching
-   - Understands role progression
-   - Values transferable skills
-
-2. **Bias Detection**:
-   - Flags gender-biased language in job description
-   - Removes university name bias
-   - Focuses on skills/experience
-
-3. **Gap Analysis**:
-   - Identifies missing skills
-   - Suggests training resources
-   - Generates development questions
+1. **Contextual Scoring** — not just keyword matching; understands role progression
+2. **Bias Detection** — flags gender-biased language in job descriptions; removes university name bias; focuses on skills/experience
+3. **Gap Analysis** — identifies missing skills; suggests training resources; generates development questions
 
 ---
 
@@ -120,12 +128,12 @@ Tool:
    - Scores against job requirements
    - Generates interview questions
 3. Agent outputs:
-   - Ranked shortlist (top 10)
+   - Ranked shortlist (top 10 candidates)
    - Detailed scorecards per candidate
-   - Interview question sets
-   - Rejection emails (optional)
-4. HR reviews and approves
-5. SMS notifications sent to shortlisted candidates
+   - Interview question sets per candidate
+   - (Optional) Rejection email drafts
+4. HR reviews and approves shortlist
+5. (Later) SMS notifications sent via Africa's Talking
 ```
 
 ---
@@ -154,188 +162,80 @@ Tool:
   "experience": [
     {
       "title": "Software Developer",
-      "company": "Safaricom",
-      "duration_months": 24,
+      "company": "Safaricom PLC",
+      "start": "2021-03",
+      "end": "present",
       "type": "formal",
-      "responsibilities": ["Built M-Pesa integrations", "..."]
+      "description": "Built M-Pesa integrations for enterprise clients"
     },
     {
       "title": "Freelance Web Developer",
+      "company": "Self-employed",
+      "start": "2020-06",
+      "end": "2021-02",
       "type": "informal",
-      "duration_months": 12,
-      "projects": ["E-commerce sites", "WordPress"]
+      "description": "WordPress sites for SMEs in Westlands"
     }
   ],
   "skills": {
-    "technical": ["Python", "Django", "JavaScript", "M-Pesa API"],
-    "languages": ["English (native)", "Swahili (fluent)"],
-    "soft": ["Team leadership", "Communication"]
+    "technical": ["Python", "PHP", "WordPress", "M-Pesa API", "MySQL"],
+    "soft": ["Communication", "Team leadership"],
+    "languages": ["English", "Swahili"]
   },
-  "certifications": ["AWS Certified", "Google Analytics"],
-  "portfolio": ["github.com/...", "website.com"]
-}
-```
-
-### Scoring Output
-```json
-{
-  "candidate": "John Kamau",
-  "overall_score": 78,
-  "breakdown": {
-    "education_match": 90,
-    "experience_match": 75,
-    "skills_match": 70,
-    "cultural_fit": 80
-  },
-  "strengths": [
-    "Strong M-Pesa integration experience",
-    "Bilingual",
-    "Local market knowledge"
-  ],
-  "concerns": [
-    "No cloud deployment experience",
-    "Short tenure at previous role"
-  ],
-  "recommendation": "Interview",
-  "interview_questions": [
-    "Describe a complex M-Pesa integration challenge you solved",
-    "How do you handle deployment in production environments?",
-    "..."
+  "certifications": [
+    {
+      "name": "Google IT Support Certificate",
+      "issuer": "Google / Coursera",
+      "year": 2022
+    }
   ]
 }
 ```
 
----
-
-## Implementation Roadmap
-
-### Week 17: Core Agent
-- [ ] Set up project structure
-- [ ] Build document processor
-- [ ] Create extraction agent with tools
-- [ ] Test on 20 real Kenyan CVs
-- [ ] Build matching engine
-- [ ] Implement scoring algorithm
-
-### Week 18: Interface & Deployment
-- [ ] Build web interface (Streamlit/Gradio)
-- [ ] Add batch upload
-- [ ] Integrate Africa's Talking SMS
-- [ ] Create PDF report generator
-- [ ] Deploy to Vercel/Replit
-- [ ] Write documentation
-
----
-
-## Testing Strategy
-
-### Test Data
-- Collect 50 anonymized Kenyan CVs:
-  - 20 tech roles
-  - 15 business roles
-  - 15 mixed backgrounds
-- Mix of 8-4-4, CBC, international education
-- Various experience levels
-
-### Validation
-- Compare agent scores vs human recruiter scores
-- Target: >80% agreement on top 10 candidates
-- Measure: processing time (should be <10 seconds/CV)
+### Scorecard Output Structure
+```json
+{
+  "candidate_name": "John Kamau",
+  "job_title": "Junior Software Developer",
+  "fit_score": 82,
+  "recommendation": "SHORTLIST",
+  "skill_match": {
+    "matched": ["Python", "REST APIs", "SQL", "M-Pesa API"],
+    "missing": [],
+    "bonus": ["WordPress", "MySQL"]
+  },
+  "experience_score": 85,
+  "education_score": 90,
+  "interview_questions": [
+    "Your CV shows freelance WordPress work — can you describe a project where you had to integrate a payment system?",
+    "You transitioned from freelance to Safaricom in 2021. What drove that decision and what did you learn?"
+  ],
+  "notes": "Strong M-Pesa API experience is a significant plus for this role."
+}
+```
 
 ---
 
-## Success Metrics
-
-**Technical**:
-- [ ] Process 100 CVs in <15 minutes
-- [ ] Accuracy >85% on data extraction
-- [ ] Zero API failures with retry logic
-- [ ] Cost <$0.10 per CV processed
-
-**Product**:
-- [ ] Deployed and accessible online
-- [ ] 5+ Kenyan recruiters test it
-- [ ] Feedback collected
-- [ ] Demo video published
-
-**Content**:
-- [ ] Before AGI article: "Building AI for Kenya: Hiring Agent Case Study"
-- [ ] Technical deep-dive on blog
-- [ ] GitHub repo with documentation
-
----
-
-## Monetization Potential
-
-**Pricing Model**:
-- Free: 10 CVs/month
-- Starter: $29/month - 100 CVs
-- Pro: $99/month - 500 CVs
-- Enterprise: Custom
-
-**Target Market**:
-- Kenyan recruitment agencies (50+ in Nairobi)
-- HR departments (banks, telcos, tech companies)
-- Staffing firms
-
-**Revenue Goal**: First paying customer by Week 24
-
----
-
-## Tech Stack
-
-- **Backend**: Python + FastAPI
-- **Agent**: Anthropic Claude (Haiku for cost)
-- **Document Processing**: pypdf2, mammoth, python-docx
-- **SMS**: Africa's Talking API
-- **Database**: SQLite → PostgreSQL later
-- **Frontend**: Streamlit (simple) or Next.js (advanced)
-- **Deployment**: Vercel/Railway
-- **Monitoring**: Helicone
-
----
-
-## Code Structure
+## Sprint 1 File Structure
 
 ```
-kenyan-hiring-agent/
+agent-1-kenyan-hiring/
+├── README.md
+├── pyproject.toml              ← Dependencies
+├── .env.example                ← API key template
 ├── src/
-│   ├── agents/
-│   │   ├── extractor.py
-│   │   ├── matcher.py
-│   │   └── interviewer.py
-│   ├── tools/
-│   │   ├── document_processor.py
-│   │   ├── education_analyzer.py
-│   │   └── sms_sender.py
-│   ├── utils/
-│   │   ├── prompts.py
-│   │   └── schemas.py
-│   └── app.py
-├── tests/
+│   ├── hello_claude.py         ← Week 1: first API call
+│   ├── extractor.py            ← CV data extraction tools
+│   ├── matcher.py              ← Scoring and matching engine
+│   ├── question_gen.py         ← Interview question generator
+│   └── document_processor.py  ← PDF/DOCX → text
+├── prompts/
+│   ├── system_prompt.md        ← Main system prompt
+│   └── extraction_prompt.md
 ├── data/
-│   ├── sample_cvs/
-│   └── job_descriptions/
-├── docs/
-└── README.md
+│   ├── sample_cvs/             ← Test CVs (anonymized)
+│   └── sample_job_descriptions/
+└── tests/
+    ├── test_extractor.py
+    └── test_matcher.py
 ```
-
----
-
-## Next Steps
-
-1. Start Week 17 after completing Phase 3
-2. Collect test CVs during Phase 1-2
-3. Draft prompts during Phase 2
-4. Build prototype during Week 17-18
-
----
-
-**Related Projects**:
-- [[Project-2-Agricultural-Extension-Agent]]
-- [[Project-3-MPesa-Workflow-Agent]]
-
-**Prerequisites**:
-- Complete [[Phase-1-Foundation]]
-- Complete [[Phase-2-Frameworks]]
-- Complete [[Phase-3-Production]]
