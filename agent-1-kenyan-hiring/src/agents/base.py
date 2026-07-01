@@ -68,23 +68,42 @@ class BaseAgent:
 
         This is the single LLM call — the "Act" step in the ReAct cycle.
         """
+        import time
         console.print(f"  [dim]-> {self.name} thinking...[/dim]")
 
-        try:
-            active_client = get_client()
-            response = active_client.models.generate_content(
-                model=MODEL,
-                contents=[
-                    types.Content(role="user", parts=[
-                        types.Part(text=f"{self.system_prompt}\n\n{user_input}")
-                    ])
-                ],
-                config=THINKING_CONFIG,
-            )
-            return response.text
-        except Exception as e:
-            console.print(f"[bold red]API Error in {self.name}: {e}[/bold red]")
-            raise e
+        max_api_retries = 3
+        backoff_delay = 2
+
+        for attempt in range(max_api_retries):
+            try:
+                active_client = get_client()
+                response = active_client.models.generate_content(
+                    model=MODEL,
+                    contents=[
+                        types.Content(role="user", parts=[
+                            types.Part(text=f"{self.system_prompt}\n\n{user_input}")
+                        ])
+                    ],
+                    config=THINKING_CONFIG,
+                )
+                return response.text
+            except Exception as e:
+                error_str = str(e).lower()
+                is_transient = False
+                
+                # Check status code or common error keywords for transient overload
+                if hasattr(e, "code") and e.code in (429, 503):
+                    is_transient = True
+                elif "503" in error_str or "429" in error_str or "overloaded" in error_str or "unavailable" in error_str or "high demand" in error_str:
+                    is_transient = True
+
+                if is_transient and attempt < max_api_retries - 1:
+                    console.print(f"    [yellow][API WARN] Gemini is overloaded. Retrying in {backoff_delay}s... (Attempt {attempt+1}/{max_api_retries})[/yellow]")
+                    time.sleep(backoff_delay)
+                    backoff_delay *= 2
+                else:
+                    console.print(f"[bold red]API Error in {self.name}: {e}[/bold red]")
+                    raise e
 
     def run_with_retry(
         self,
