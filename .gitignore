@@ -14,3 +14,23 @@ Thumbs.db
 02-Accounts-Setup.md
 Daily-Progress-Log.md
 00-PROJECT-MASTER-OLD-LESSONS.md
+
+# Python envs and packages
+.venv/
+env/
+venv/
+ENV/
+
+# Secrets
+.env
+*.env
+
+# Python cache
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local reports
+**/data/reports/
+

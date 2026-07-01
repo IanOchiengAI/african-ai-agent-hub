@@ -20,7 +20,7 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 | Phase | Focus Area | Status | Technical Details |
 |-------|------------|--------|-------------------|
 | **Environment** | Infrastructure setup & repo launch | ✅ Done | Monorepo created, docs pushed to GitHub |
-| **Week 1** | Python environment + first API call | 🟡 In Progress | `uv` setup, `.env` config, first Claude call |
+| **Week 1** | Python environment + first API call | ⬜ Upcoming | `uv` setup, `.env` config, first Claude call |
 | **Week 2** | Prompt engineering — CV extraction | ⬜ Upcoming | Extract name, education system, experience from plain text |
 | **Week 3** | Tool calling — structured extraction | ⬜ Upcoming | `extract_education()`, `extract_experience()`, `extract_skills()` |
 | **Week 4** | Matching engine — fit scoring | ⬜ Upcoming | `calculate_fit_score()`, 0–100 scoring against job description |
@@ -45,24 +45,25 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 ---
 
 ### Week 2 — Prompt Engineering: CV Extraction
-**Goal:** Claude can extract structured fields from a plain-text CV
+**Goal:** Claude can extract structured fields from a plain-text CV using a well-crafted prompt
 
 **Deliverables:**
 - [ ] System prompt written for a Kenyan CV screener
-- [ ] Script extracts: name, education system, experience years, top 5 skills
-- [ ] Tested on 5 different sample CVs
+- [ ] Script extracts: name, education system (8-4-4/CBC/international), experience years, top 5 skills
+- [ ] Tested on 5 different sample CVs (different formats, different education systems)
 - [ ] Results saved as JSON
 
 ---
 
 ### Week 3 — Tool Calling: Structured Extraction
-**Goal:** Replace single-prompt extraction with proper tool calling
+**Goal:** Replace single-prompt extraction with proper tool calling for each CV section
 
 **Deliverables:**
 - [ ] `extract_education()` tool defined and working
 - [ ] `extract_experience()` tool working (handles informal/gap/freelance)
 - [ ] `extract_skills()` tool working
-- [ ] All tools return clean JSON with error handling
+- [ ] All tools return clean JSON
+- [ ] Error handling in place
 
 ---
 
@@ -70,7 +71,9 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 **Goal:** Given a structured CV and a job description, produce a 0–100 fit score
 
 **Deliverables:**
-- [ ] `compare_skills()`, `score_experience()`, `evaluate_education()` tools
+- [ ] `compare_skills()` tool — matches CV skills to job requirements
+- [ ] `score_experience()` tool — evaluates years and relevance
+- [ ] `evaluate_education()` tool — no bias toward specific institutions
 - [ ] `calculate_fit_score()` — combines all signals into one number
 - [ ] Tested on 5 CV + job description pairs
 
@@ -80,7 +83,9 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 **Goal:** Process 10 CVs against one job description in a single run
 
 **Deliverables:**
-- [ ] Loop over a folder of CVs, output ranked list
+- [ ] Loop over a folder of CVs
+- [ ] Process each and collect scorecards
+- [ ] Output a ranked list (highest fit score first)
 - [ ] Total run time < 2 minutes for 10 CVs
 
 ---
@@ -89,8 +94,10 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 **Goal:** Agent accepts real CV files, not just copy-pasted text
 
 **Deliverables:**
-- [ ] `pypdf2` and `python-docx` integration
+- [ ] `pypdf2` integration — extract text from PDF CVs
+- [ ] `python-docx` integration — extract text from DOCX CVs
 - [ ] Handle encoding errors and formatting noise
+- [ ] Tested on 5 real CV files (anonymized)
 
 ---
 
@@ -98,8 +105,10 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 **Goal:** For each shortlisted candidate, generate 5–7 tailored interview questions
 
 **Deliverables:**
-- [ ] `generate_questions(cv_data, job_role)` tool
-- [ ] Questions reference specific CV content and probe skill gaps
+- [ ] `generate_questions(cv_data, job_role)` tool working
+- [ ] Questions reference specific CV content (not generic)
+- [ ] Questions probe identified skill gaps
+- [ ] Output appended to candidate scorecard
 
 ---
 
@@ -107,16 +116,17 @@ By end of Sprint 1, it should be able to process plain-text and PDF CVs and outp
 **Goal:** End-to-end working demo. Push everything. Write the Sprint 1 post.
 
 **Deliverables:**
-- [ ] Full pipeline: PDF/DOCX CVs → structured data → scores → shortlist → questions
-- [ ] Clean README in `agent-1-kenyan-hiring/` with setup instructions
+- [ ] Full pipeline working: PDF/DOCX CVs → structured data → scores → shortlist → questions
+- [ ] Clean `README.md` in `agent-1-kenyan-hiring/` with setup instructions
 - [ ] All code pushed to GitHub
 - [ ] Sprint 1 LinkedIn post / Substack write-up published
+- [ ] Sprint 2 planning begun
 
 ---
 
 ## What Sprint 1 Does NOT Include
 
-To keep scope tight, the following are deferred:
+To keep scope tight, the following are deferred to later:
 
 - ❌ Web UI or frontend (command-line only for now)
 - ❌ SMS notifications via Africa's Talking (Sprint 2)

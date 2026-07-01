@@ -1,0 +1,40 @@
+JOHN KAMAU MWANGI
+john.kamau@gmail.com | +254 712 345 678 | Nairobi, Kenya
+
+EDUCATION
+---------
+University of Nairobi — BSc Computer Science (2016–2020)
+Second Class Upper Division
+Kenya Certificate of Secondary Education (KCSE) — Starehe Boys Centre (2012–2015)
+Grade: A- (78 points)
+
+WORK EXPERIENCE
+---------------
+Software Developer — Safaricom PLC, Nairobi (March 2021 – Present)
+- Built and maintained M-Pesa API integrations for enterprise clients
+- Developed internal tools using Python and Django
+- Worked in an agile team of 6 developers
+
+Freelance Web Developer — Self-employed (June 2020 – February 2021)
+- Built WordPress sites for 12 SMEs in Westlands and Kilimani
+- Integrated M-Pesa payment gateways for e-commerce clients
+- Managed client relationships independently
+
+IT Attachment — Kenya Revenue Authority (January 2019 – April 2019)
+- Assisted in database maintenance (MySQL)
+- Supported internal helpdesk for 3 months
+
+SKILLS
+------
+Technical: Python, PHP, WordPress, MySQL, M-Pesa Daraja API, REST APIs, Git
+Soft Skills: Communication, teamwork, problem-solving
+Languages: English (fluent), Swahili (native)
+
+CERTIFICATIONS
+--------------
+Google IT Support Professional Certificate — Coursera (2022)
+AWS Cloud Practitioner (in progress)
+
+REFERENCES
+----------
+Available on request

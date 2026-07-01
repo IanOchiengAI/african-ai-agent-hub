@@ -133,7 +133,7 @@ Tool:
    - Interview question sets per candidate
    - (Optional) Rejection email drafts
 4. HR reviews and approves shortlist
-5. (Later) SMS notifications sent via Africa's Talking
+5. (Later) SMS notifications sent to shortlisted candidates via Africa's Talking
 ```
 
 ---
@@ -157,6 +157,13 @@ Tool:
       "system": "8-4-4",
       "graduation_year": 2020,
       "grade": "Second Class Upper"
+    },
+    {
+      "level": "Secondary",
+      "institution": "Alliance High School",
+      "system": "8-4-4",
+      "graduation_year": 2016,
+      "grade": "B+ (70 points)"
     }
   ],
   "experience": [
@@ -166,7 +173,7 @@ Tool:
       "start": "2021-03",
       "end": "present",
       "type": "formal",
-      "description": "Built M-Pesa integrations for enterprise clients"
+      "description": "Built M-Pesa integrations..."
     },
     {
       "title": "Freelance Web Developer",
@@ -189,6 +196,20 @@ Tool:
       "year": 2022
     }
   ]
+}
+```
+
+### Job Requirement Structure
+```json
+{
+  "title": "Junior Software Developer",
+  "company": "Nairobi Fintech Ltd",
+  "required_skills": ["Python", "REST APIs", "SQL"],
+  "preferred_skills": ["M-Pesa API", "FastAPI"],
+  "min_experience_years": 1,
+  "education_requirement": "Degree or equivalent",
+  "education_systems_accepted": ["8-4-4", "CBC", "International", "Informal"],
+  "location": "Nairobi (hybrid)"
 }
 ```
 
@@ -221,19 +242,21 @@ Tool:
 ```
 agent-1-kenyan-hiring/
 ├── README.md
-├── pyproject.toml              ← Dependencies
-├── .env.example                ← API key template
+├── pyproject.toml            ← Dependencies
+├── .env.example              ← API key template
 ├── src/
-│   ├── hello_claude.py         ← Week 1: first API call
-│   ├── extractor.py            ← CV data extraction tools
-│   ├── matcher.py              ← Scoring and matching engine
-│   ├── question_gen.py         ← Interview question generator
-│   └── document_processor.py  ← PDF/DOCX → text
+│   ├── __init__.py
+│   ├── agent.py              ← Main agent loop
+│   ├── extractor.py          ← CV data extraction tools
+│   ├── matcher.py            ← Scoring and matching engine
+│   ├── question_gen.py       ← Interview question generator
+│   └── document_processor.py ← PDF/DOCX → text
 ├── prompts/
-│   ├── system_prompt.md        ← Main system prompt
-│   └── extraction_prompt.md
+│   ├── system_prompt.md      ← Main system prompt
+│   ├── extraction_prompt.md
+│   └── scoring_prompt.md
 ├── data/
-│   ├── sample_cvs/             ← Test CVs (anonymized)
+│   ├── sample_cvs/           ← Test CVs (anonymized)
 │   └── sample_job_descriptions/
 └── tests/
     ├── test_extractor.py

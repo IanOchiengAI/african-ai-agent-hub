@@ -1,0 +1,43 @@
+JOB TITLE: Junior Software Developer
+COMPANY: Nairobi Fintech Solutions Ltd
+LOCATION: Nairobi (Hybrid — 3 days office, 2 days remote)
+SALARY: KES 80,000 – 120,000 per month
+
+ABOUT THE ROLE
+--------------
+We are looking for a Junior Software Developer to join our payments team.
+You will work on integrating M-Pesa and other mobile money solutions into
+our platform serving over 50,000 SMEs across Kenya.
+
+REQUIRED SKILLS
+---------------
+- Python (1+ year experience)
+- REST APIs (building and consuming)
+- SQL / databases (MySQL or PostgreSQL)
+- Git / version control
+
+PREFERRED SKILLS (nice to have)
+-------------------------------
+- M-Pesa Daraja API experience
+- FastAPI or Django
+- Experience with financial systems
+
+EXPERIENCE REQUIRED
+-------------------
+Minimum 1 year of professional software development experience.
+We welcome candidates from non-traditional backgrounds — bootcamp graduates,
+self-taught developers, and those with informal sector experience are
+encouraged to apply.
+
+EDUCATION
+---------
+Degree in Computer Science, Software Engineering, or equivalent.
+Equivalent experience (bootcamp, self-taught with portfolio) is accepted.
+
+WHAT WE OFFER
+-------------
+- KES 80,000 – 120,000/month depending on experience
+- Health insurance (employee + 1 dependent)
+- 21 days annual leave
+- Training budget: KES 50,000/year
+- Laptop provided

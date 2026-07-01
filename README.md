@@ -4,7 +4,9 @@ The AI revolution shouldn't be imported — it should be built locally.
 
 Welcome to the **African AI Agent Hub**, an open-source initiative and public build log documenting a 6-month journey to build production-grade AI agents tailored specifically for African workflows and use cases.
 
-**Build log:** Sprint 1 is live — building in public because nothing ever goes wrong.
+**GitHub:** https://github.com/IanOchiengAI/african-ai-agent-hub  
+**Build log:** Sprint 1 is live — building in public because nothing ever goes wrong.  
+**Progress:** See [PROJECT-TRACKER.md](./PROJECT-TRACKER.md)
 
 ---
 
@@ -40,16 +42,17 @@ A Swahili-first WhatsApp agent designed for smallholder farmers. It accepts phot
 
 ```
 african-ai-agent-hub/
+├── PROJECT-TRACKER.md           ← Master progress tracker
 ├── README.md                    ← This file
-├── Sprint-1-Tracker.md          ← Live sprint progress
-├── 03-Resources-Library.md      ← Learning resources
-├── Projects/
+├── docs/                        ← Planning & spec documents
 │   ├── Project-1-Kenyan-Hiring-Agent.md
 │   ├── Project-2-Crop-Doctor.md
-│   └── Project-3-MPesa-SME-Accounting-Agent.md
-└── Milestones/
-    ├── Phase-1-Foundation.md
-    └── Phase-2-3-4-Outlines.md
+│   ├── Project-3-MPesa-SME-Accounting-Agent.md
+│   ├── Phase-1-Foundation.md
+│   └── Resources-Library.md
+├── agent-1-kenyan-hiring/       ← Agent 1 code (Sprint 1)
+├── agent-2-mpesa-accounting/    ← Agent 2 code (Sprint 2)
+└── agent-3-crop-doctor/         ← Agent 3 code (Sprint 3)
 ```
 
 ---
@@ -57,9 +60,9 @@ african-ai-agent-hub/
 ## 🛠️ Tech Stack
 
 - **Language:** Python 3.12+
-- **LLM:** Anthropic Claude (claude-sonnet-4-5)
+- **LLM:** Google Gemini 3.5 Flash (High Thinking)
 - **Package manager:** `uv`
-- **SMS (later):** Africa's Talking
+- **SMS:** Africa's Talking (Sprint 1, later phases)
 - **Document parsing:** pypdf2, python-docx
 
 ---
@@ -76,4 +79,7 @@ african-ai-agent-hub/
 
 ## 🤝 Building in Public
 
-This is a learning-by-building project. Every sprint produces working code, a demo, and a write-up of what I learned. Follow the journey on LinkedIn and GitHub.
+This is a learning-by-building project. Every sprint produces working code, a demo, and a write-up of what I learned. Follow the journey:
+
+- LinkedIn: [Ian Ochieng](https://linkedin.com/in/ianochieng)
+- GitHub: [IanOchiengAI](https://github.com/IanOchiengAI)
