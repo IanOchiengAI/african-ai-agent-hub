@@ -22,14 +22,20 @@ from rich.console import Console
 load_dotenv()
 console = Console()
 
-# ── Gemini client initialization ──────────────────────────────────────────────
-api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
-if not api_key:
-    console.print("[bold red]Error: GOOGLE_API_KEY or GEMINI_API_KEY not found in environment or .env file.[/bold red]")
-    console.print("[yellow]Please make sure to set it in your .env file.[/yellow]")
-    sys.exit(1)
+# ── Gemini client initialization (Lazy loaded at runtime) ─────────────────────
+client = None
 
-client = genai.Client(api_key=api_key)
+def get_client():
+    global client
+    if client is not None:
+        return client
+    
+    api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise ValueError("GOOGLE_API_KEY or GEMINI_API_KEY not found in environment or .env file.")
+    
+    client = genai.Client(api_key=api_key)
+    return client
 
 MODEL = "gemini-3.5-flash"
 
@@ -65,7 +71,8 @@ class BaseAgent:
         console.print(f"  [dim]-> {self.name} thinking...[/dim]")
 
         try:
-            response = client.models.generate_content(
+            active_client = get_client()
+            response = active_client.models.generate_content(
                 model=MODEL,
                 contents=[
                     types.Content(role="user", parts=[
