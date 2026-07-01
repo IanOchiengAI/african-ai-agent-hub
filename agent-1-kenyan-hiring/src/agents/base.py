@@ -22,25 +22,34 @@ from rich.console import Console
 load_dotenv()
 console = Console()
 
-# ── Gemini client initialization (Lazy loaded at runtime) ─────────────────────
+# ── Dual-provider client initialization (Lazy loaded at runtime) ──────────────
+provider = None
 client = None
 
-def get_client():
-    global client
+def init_client():
+    global provider, client
     if client is not None:
-        return client
+        return
     
-    api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise ValueError("GOOGLE_API_KEY or GEMINI_API_KEY not found in environment or .env file.")
+    groq_key = os.environ.get("GROQ_API_KEY")
+    google_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
     
-    client = genai.Client(api_key=api_key)
-    return client
+    if groq_key:
+        from groq import Groq
+        provider = "groq"
+        client = Groq(api_key=groq_key)
+        console.print("[green]Using Groq (Llama 3.3 70B) as the active model provider.[/green]")
+    elif google_key:
+        provider = "google"
+        client = genai.Client(api_key=google_key)
+        console.print("[green]Using Gemini 3.5 Flash as the active model provider.[/green]")
+    else:
+        raise ValueError("Neither GROQ_API_KEY nor GOOGLE_API_KEY / GEMINI_API_KEY found in environment or secrets.")
 
 MODEL = "gemini-3.5-flash"
 
 # High thinking = the model reasons deeply before answering.
-# Great for complex extraction and scoring tasks.
+# Great for complex extraction and scoring tasks (Gemini only).
 THINKING_CONFIG = types.GenerateContentConfig(
     thinking_config=types.ThinkingConfig(
         thinking_level=types.ThinkingLevel.HIGH
@@ -64,29 +73,43 @@ class BaseAgent:
 
     def run(self, user_input: str) -> str:
         """
-        Send a message to Gemini and return its text response.
+        Send a message to the active provider and return its text response.
 
         This is the single LLM call — the "Act" step in the ReAct cycle.
         """
         import time
         console.print(f"  [dim]-> {self.name} thinking...[/dim]")
 
+        global provider, client
+        if client is None:
+            init_client()
+
         max_api_retries = 3
         backoff_delay = 2
 
         for attempt in range(max_api_retries):
             try:
-                active_client = get_client()
-                response = active_client.models.generate_content(
-                    model=MODEL,
-                    contents=[
-                        types.Content(role="user", parts=[
-                            types.Part(text=f"{self.system_prompt}\n\n{user_input}")
-                        ])
-                    ],
-                    config=THINKING_CONFIG,
-                )
-                return response.text
+                if provider == "groq":
+                    chat_completion = client.chat.completions.create(
+                        model="llama-3.3-70b-versatile",
+                        messages=[
+                            {"role": "system", "content": self.system_prompt},
+                            {"role": "user", "content": user_input}
+                        ],
+                        max_tokens=4096,
+                    )
+                    return chat_completion.choices[0].message.content
+                else:
+                    response = client.models.generate_content(
+                        model=MODEL,
+                        contents=[
+                            types.Content(role="user", parts=[
+                                types.Part(text=f"{self.system_prompt}\n\n{user_input}")
+                            ])
+                        ],
+                        config=THINKING_CONFIG,
+                    )
+                    return response.text
             except Exception as e:
                 error_str = str(e).lower()
                 is_transient = False
@@ -98,7 +121,7 @@ class BaseAgent:
                     is_transient = True
 
                 if is_transient and attempt < max_api_retries - 1:
-                    console.print(f"    [yellow][API WARN] Gemini is overloaded. Retrying in {backoff_delay}s... (Attempt {attempt+1}/{max_api_retries})[/yellow]")
+                    console.print(f"    [yellow][API WARN] {provider.upper()} is overloaded. Retrying in {backoff_delay}s... (Attempt {attempt+1}/{max_api_retries})[/yellow]")
                     time.sleep(backoff_delay)
                     backoff_delay *= 2
                 else:

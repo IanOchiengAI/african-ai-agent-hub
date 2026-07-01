@@ -49,15 +49,26 @@ st.markdown("""
 
 # ── Load environment / API key ────────────────────────────────────────────────
 # Check Streamlit secrets first (for cloud deployment), then local environment
+GROQ_API_KEY = None
 GOOGLE_API_KEY = None
-if "GOOGLE_API_KEY" in st.secrets:
-    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-else:
+
+try:
+    if "GROQ_API_KEY" in st.secrets:
+        GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+    if "GOOGLE_API_KEY" in st.secrets:
+        GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+except Exception:
+    pass
+
+if not GROQ_API_KEY and not GOOGLE_API_KEY:
     from dotenv import load_dotenv
     load_dotenv()
-    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 
 # Set the key in environmental variables so the sub-agents can read it
+if GROQ_API_KEY:
+    os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 if GOOGLE_API_KEY:
     os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
     os.environ["GEMINI_API_KEY"] = GOOGLE_API_KEY
@@ -145,11 +156,17 @@ def extract_text_from_file(uploaded_file) -> str:
 
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown('<div class="main-header">Kenyan Hiring Agent 🇰🇪</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-header">Multi-agent CV screening powered by Gemini 3.5 Flash (High Thinking)</div>', unsafe_allow_html=True)
+
+if GROQ_API_KEY:
+    provider_info = "powered by Groq Llama 3.3 (fast & stable)"
+else:
+    provider_info = "powered by Gemini 3.5 Flash (High Thinking)"
+
+st.markdown(f'<div class="sub-header">Multi-agent CV screening {provider_info}</div>', unsafe_allow_html=True)
 
 # ── API Status Check ──────────────────────────────────────────────────────────
-if not GOOGLE_API_KEY or GOOGLE_API_KEY == "your_google_api_key_here":
-    st.warning("⚠️ Google API Key not configured. Please add GOOGLE_API_KEY to your Streamlit secrets or .env file.")
+if not GOOGLE_API_KEY and not GROQ_API_KEY:
+    st.warning("⚠️ No API Key configured. Please add GOOGLE_API_KEY or GROQ_API_KEY to your Streamlit secrets or .env file.")
     st.stop()
 
 # ── UI Layout ─────────────────────────────────────────────────────────────────
